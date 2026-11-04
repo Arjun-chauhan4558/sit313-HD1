@@ -1,4 +1,6 @@
+
 import { useState } from "react";
+import { auth } from "../firebase";
 import "./Post.css";
 
 function Post() {
@@ -9,129 +11,114 @@ function Post() {
   const [articleText, setArticleText] = useState("");
   const [tags, setTags] = useState("");
 
+  async function handlePost(e) {
+    e.preventDefault();
 
-  function handlePost(event) {
-    event.preventDefault();
-    if (!title.trim()) {
-      alert("Please enter a title.");
-      return;
-    }
-    if (postType === "Question" && !description.trim()) {
-      alert("Please describe your problem.");
-      return;
-    }
-    if (postType === "Article" &&
-        (!abstract.trim() || !articleText.trim())) {
-      alert("Please complete the abstract and article text.");
-      return;
-    }
-    const tagList = tags
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag !== "");
-
-    if (tagList.length === 0 || tagList.length > 3) {
-      alert("Please enter between 1 and 3 tags.");
+    if (!auth.currentUser) {
+      alert("Please log in before submitting.");
       return;
     }
 
-    alert("Your post has been submitted successfully!");
+    const token = await auth.currentUser.getIdToken();
+
+    const response = await fetch("http://localhost:5000/api/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + token
+      },
+      body: JSON.stringify({
+        title: title,
+        postType: postType,
+        description: description,
+        abstract: abstract,
+        articleText: articleText,
+        tags: tags
+      })
+    });
+
+    const data = await response.json();
+
+    alert(data.message);
+
+    if (response.ok) {
+      setTitle("");
+      setDescription("");
+      setAbstract("");
+      setArticleText("");
+      setTags("");
+    }
   }
 
   return (
     <div className="post-container">
-      <h1>New Post</h1>
+      <h2>Create a Post</h2>
 
-      <div className="post-type">
-        <label>
-          <input
-            type="radio"
-            name="postType"
-            value="Question"
-            checked={postType === "Question"} onChange={() => setPostType("Question")}
-          />
-          Question
-        </label>
+      <form onSubmit={handlePost}>
 
-        <label>
-          <input
-            type="radio"
-            name="postType"
-            value="Article"
-            checked={postType === "Article"}onChange={() => setPostType("Article")}
-          />
-          Article
-        </label>
-      </div>
+        <div className="post-type">
+          <label>
+            <input
+              type="radio"
+              checked={postType === "Question"}
+              onChange={() => setPostType("Question")}
+            />
+            Question
+          </label>
 
-      <h2>What do you want to ask or share?</h2>
+          <label>
+            <input
+              type="radio"
+              checked={postType === "Article"}
+              onChange={() => setPostType("Article")}
+            />
+            Article
+          </label>
+        </div>
 
-      <p className="post-description">
-        {postType === "Question"
-          ? "Ask a question and get help from the community."
-          : "Share an article with the community."}
-      </p>
-
-      <form className="post-form" onSubmit={handlePost}>
-        <label htmlFor="title">Title</label>
         <input
-          id="title"
           type="text"
-          placeholder={
-            postType === "Question"
-              ? "Start your question with how, what, why, etc."
-              : "Enter a descriptive title"
-          }
+          placeholder="Enter post title"
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
           required
         />
 
         {postType === "Question" ? (
-          <>
-            <label htmlFor="description">Describe your problem</label>
-            <textarea
-              id="description"
-              value={description}
-              onChange={(event) => setDescription(event.target.value)}
-              placeholder="Describe your problem"
-              required
-            />
-          </>
+          <textarea
+            placeholder="Describe your question..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
         ) : (
           <>
-            <label htmlFor="abstract">Abstract</label>
             <textarea
-              id="abstract"
+              placeholder="Article abstract"
               value={abstract}
-              onChange={(event) => setAbstract(event.target.value)}
-              placeholder="Enter a short summary of your article"
+              onChange={(e) => setAbstract(e.target.value)}
               required
             />
 
-            <label htmlFor="articleText">Article Text</label>
             <textarea
-              id="articleText"
+              placeholder="Write your article..."
               value={articleText}
-              onChange={(event) => setArticleText(event.target.value)}
-              placeholder="Write your article here"
+              onChange={(e) => setArticleText(e.target.value)}
               required
             />
           </>
         )}
 
-        <label htmlFor="tags">Tags</label>
         <input
-          id="tags"
           type="text"
+          placeholder="Tags (separate with commas, maximum 3)"
           value={tags}
-          onChange={(event) => setTags(event.target.value)}
-          placeholder="Enter up to 3 tags separated by commas"
+          onChange={(e) => setTags(e.target.value)}
           required
         />
-        <button type="submit" className="post-button">
-          Post
-        </button>
+
+        <button type="submit">Submit Post</button>
+
       </form>
     </div>
   );

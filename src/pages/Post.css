@@ -1,101 +1,92 @@
+
 .post-container {
-  max-width: 850px;
-  margin: 40px auto;
-  padding: 30px;
-  background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  max-width: 650px;
+  margin: 50px auto;
+  padding: 35px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
 }
-.post-container h1 {
-  font-size: 30px;
-  margin-bottom: 25px;
+
+.post-container h2 {
+  font-size: 26px;
   color: #222;
+  margin: 0 0 25px;
 }
+
+.post-container form {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch;
+  gap: 18px;
+  width: 100%;
+}
+
 .post-type {
   display: flex;
+  flex-direction: row;
+  align-items: center;
   gap: 25px;
-  margin-bottom: 30px;
 }
+
 .post-type label {
   display: flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  font-size: 16px;
-}
-.post-container h2 {
-  font-size: 22px;
-  margin-bottom: 10px;
-  color: #333;
-}
-.post-description {
-  color: #666;
-  margin-bottom: 25px;
-  line-height: 1.5;
-}
-.post-form {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-.post-form label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-weight: 600;
-  color: #333;
-}
-.post-form input,
-.post-form textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  gap: 7px;
   font-size: 15px;
-  font-family: inherit;
-  box-sizing: border-box;
+  color: #333;
+  cursor: pointer;
 }
-.post-form textarea {
-  min-height: 130px;
+
+.post-type input {
+  accent-color: #2563eb;
+}
+
+.post-container input[type="text"],
+.post-container textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  font-size: 15px;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+.post-container textarea {
+  min-height: 120px;
   resize: vertical;
 }
-.post-form input:focus,
-.post-form textarea:focus {
+
+.post-container input[type="text"]:focus,
+.post-container textarea:focus {
   outline: none;
-  border-color: #0d6efd;
-  box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.12);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
-.post-button {
-  align-self: flex-start;
-  padding: 12px 28px;
-  background-color: #0d6efd;
+.post-container button {
+  width: 100%;
+  padding: 13px;
+  background: #2563eb;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 7px;
   font-size: 16px;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.post-button:hover {
-  background-color: #0b5ed7;
+.post-container button:hover {
+  background: #1d4ed8;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .post-container {
-    margin: 20px 12px;
-    padding: 20px;
-  }
-
-  .post-container h1 {
-    font-size: 26px;
-  }
-
-  .post-type {
-    gap: 18px;
-  }
-
-  .post-button {
-    width: 100%;
+    margin: 25px 15px;
+    padding: 22px;
   }
 }

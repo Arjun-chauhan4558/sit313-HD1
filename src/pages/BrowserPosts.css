@@ -1,0 +1,80 @@
+
+.browse-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+.browse-container h2 {
+  margin-bottom: 25px;
+}
+
+.browse-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.browse-filters input,
+.browse-filters select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.browse-post-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 18px;
+  background: white;
+}
+
+.post-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.browse-post-card p {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.browse-post-card button,
+.browse-filters button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.browse-post-card button {
+  background: #eeeeee;
+}
+.browse-filters button {
+  background: #222;
+  color: white;
+}
+
+
+.post-navigation {
+  display: flex;
+  gap: 25px;
+  padding: 16px 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.post-navigation a {
+  color: #333;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.post-navigation a:hover {
+  color: #2563eb;
+}
